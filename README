@@ -1,0 +1,8 @@
+README - start of project to extract schema from JSON files. Assumes the following formatting is used.
+
+{ start the file
+Subsequent nested { can be added as long as a } closes it.
+Assumes : is the key:value relationship indicator
+Assumes , seperates key:value pairs
+
+This is an initial rough draft in no working order. This README will be updated as more  work is done
