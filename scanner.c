@@ -10,66 +10,70 @@
 
 int scannerStart(FILE *fp) {
     int intC; //int for holing pointer
+    FILE *fileCopy;
+    fileCopy = fp; //make a copy of the original file pointer so it's not modified.
     char c; //char to hold character from pointer
-    char prevC;
     int cType = 0;
-    int drop = 0; //boolean drop or keep
-    int size = 0; //size of string to be build
-    int counter = 1;
-    int split;
-    int startBraces = 0;
-    int endBraces = 0;
-    int writeNewLine=0;
-    int tokeType = 0;
-    int writeToke = 0;
+    int counter = 0;
+    int tokOrLex = 1;
+
+    char *string;
 
 
     while ((intC = fgetc(fp)) != EOF) {
         c = (char) intC;
         cType = reservedCharType(c);
-        if(cType!=100){
-            if(cType==2){
-                tokeType=1;
-                writeToke=1;
-            }else{
-                tokeType=2;
-                writeToke=1;
-            }
-            if(writeNewLine==1){
-                writeCharToFile('\n');
-                writeNewLine=0;
-            }
+        if (cType == 4) {
+            //Token is " and so is lexem
             writeCharToFile(c);
             writeCharToFile('\t');
             writeCharToFile(c);
             writeCharToFile('\n');
-
-        }else{
-            if(tokeType==1 && writeToke==1) {
-                writeCharToFile('V');
-                writeCharToFile('A');
-                writeCharToFile('L');
-                writeCharToFile('U');
-                writeCharToFile('E');
-                writeCharToFile('\t');
-                tokeType=0;
-                writeToke=0;
-            }
-            if(tokeType==2 && writeToke==1) {
-                writeCharToFile('K');
-                writeCharToFile('E');
-                writeCharToFile('Y');
-                writeCharToFile('\t');
-                tokeType=0;
-                writeToke=0;
-            }
-            writeNewLine=1;
+            tokOrLex = scanString(fileCopy, tokOrLex); //this determines if we're printing a token or Lexem
             writeCharToFile(c);
+            writeCharToFile('\t');
+            writeCharToFile(c);
+            writeCharToFile('\n');
+            counter++;
+            //we're in a string and need to take some string related action
+        } else {
+            writeCharToFile(c);
+            writeCharToFile('\t');
+            writeCharToFile(c);
+            writeCharToFile('\n');
         }
     }
     return 0; //need new return number for error/debugging
 }
 
+int scanString(FILE *fp, int first){
+    int intC;
+    char c;
+    int retVal=0;
+
+    if(first == 1){
+        writeCharToFile('K');
+        writeCharToFile('E');
+        writeCharToFile('Y');
+        writeCharToFile('\t');
+    }else{
+        writeCharToFile('V');
+        writeCharToFile('A');
+        writeCharToFile('L');
+        writeCharToFile('U');
+        writeCharToFile('E');
+        writeCharToFile('\t');
+        retVal=1;
+    }
+    while ((intC = fgetc(fp)) != '"') {
+        if(intC !='"') {
+            c = (char) intC;
+            writeCharToFile(c);
+        }
+    }
+    writeCharToFile('\n');
+    return retVal;
+}
 
 int reservedCharType(char c){
     int i = 0;

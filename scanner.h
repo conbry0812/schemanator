@@ -8,5 +8,6 @@
 int scannerStart(FILE *fp);
 
 int reservedCharType(char c);
+int scanString(FILE *fp, int first);
 
 #endif //SCHEMANATOR_SCANNER_H
