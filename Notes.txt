@@ -45,7 +45,3 @@ not being labeled as such; only the LEXEME is being generated. This has been sem
 
 In order to properly scan I also need to make the scanner aware of "". Anything within a "" should be ignored for
 special character scanning.
-
-I've resolved the issue with scanning strings. Now I need to do something similar for integers. For any integer more
-than 2 characters long it's being written one a new line. There's also an issue with the token lexeme for arrays I need
-to resolve. Similiar to how I wrote the string function, I need to do something like that for nested values.
