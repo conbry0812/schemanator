@@ -17,19 +17,27 @@ int scannerStart(FILE *fp) {
     int split;
     int startBraces = 0;
     int endBraces = 0;
+    int writeNewLine=0;
 
 
     while ((intC = fgetc(fp)) != EOF) {
         c = (char) intC;
         cType = reservedCharType(c);
         if(cType!=100){
+            if(writeNewLine==1){
+                writeCharToFile('\n');
+            }
             writeCharToFile(c);
             writeCharToFile('\t');
             writeCharToFile(c);
             writeCharToFile('\n');
+            writeNewLine=0;
+        }else{
+            writeNewLine=1;
+            writeCharToFile(c);
         }
     }
-
+    return 0; //need new return number for error/debugging
 }
 
 
