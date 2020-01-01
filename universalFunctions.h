@@ -16,4 +16,13 @@ void writeCharToFile(char c){
 
 }
 
+char *stringBuilder(char c, int size, char *Strng)
+{
+    int arryPosit=size-1;
+    char sub[700];
+    Strng[arryPosit]=c;
+
+    return Strng;
+}
+
 #endif //SCHEMANATOR_UNIVERSALFUNCTIONS_H

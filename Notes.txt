@@ -36,4 +36,12 @@ Step 2: scan the file and generate token lexeme scan file. token
             "   "
             ,   ,
             ...
-Step 3: parse the scan file
+Step 3: parse the scan file to generate a schema (still determining best approach
+
+Notes and issues:
+
+The scan file is almost complete; but I need a way to determine the TOKEN LEXEME better. Right now any KEY or VALUE is
+not being labeled as such; only the LEXEME is being generated. This has been semi corrected.
+
+In order to properly scan I also need to make the scanner aware of "". Anything within a "" should be ignored for
+special character scanning.

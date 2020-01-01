@@ -11,28 +11,58 @@
 int scannerStart(FILE *fp) {
     int intC; //int for holing pointer
     char c; //char to hold character from pointer
+    char prevC;
     int cType = 0;
     int drop = 0; //boolean drop or keep
     int size = 0; //size of string to be build
+    int counter = 1;
     int split;
     int startBraces = 0;
     int endBraces = 0;
     int writeNewLine=0;
+    int tokeType = 0;
+    int writeToke = 0;
 
 
     while ((intC = fgetc(fp)) != EOF) {
         c = (char) intC;
         cType = reservedCharType(c);
         if(cType!=100){
+            if(cType==2){
+                tokeType=1;
+                writeToke=1;
+            }else{
+                tokeType=2;
+                writeToke=1;
+            }
             if(writeNewLine==1){
                 writeCharToFile('\n');
+                writeNewLine=0;
             }
             writeCharToFile(c);
             writeCharToFile('\t');
             writeCharToFile(c);
             writeCharToFile('\n');
-            writeNewLine=0;
+
         }else{
+            if(tokeType==1 && writeToke==1) {
+                writeCharToFile('V');
+                writeCharToFile('A');
+                writeCharToFile('L');
+                writeCharToFile('U');
+                writeCharToFile('E');
+                writeCharToFile('\t');
+                tokeType=0;
+                writeToke=0;
+            }
+            if(tokeType==2 && writeToke==1) {
+                writeCharToFile('K');
+                writeCharToFile('E');
+                writeCharToFile('Y');
+                writeCharToFile('\t');
+                tokeType=0;
+                writeToke=0;
+            }
             writeNewLine=1;
             writeCharToFile(c);
         }
@@ -51,6 +81,3 @@ int reservedCharType(char c){
     return 100;
 }
 
-void stringBuilder(char c, char **string, int size){
-    *string = (char *) malloc(size * sizeof(char));
-}
