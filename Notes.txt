@@ -1,0 +1,39 @@
+Developer: John Rinderer
+Date: 1/1/2020
+
+Overview:
+The program will take as input a filename, and produce as output a schema. Currently this is being built to scan and
+parse JSON. The schema will follow this format:
+
+key : dataType
+
+For any nested data the format will be:
+
+key : {
+nestedKey1 : datatype
+nestedKey2 : data Type
+}
+
+Plan:
+
+Step 1: scan the file to confirm it meets the minimum requirements - Starts with { and ends with }. Ensure total of { is
+equal to total of } to account for any nested elements.
+
+Step 2: scan the file and generate token lexeme scan file. token
+    2a. Tokens are { } , " : KEY VALUE
+    2b. lexeme are the associated data { } , " computer_name string
+    2c. Example:
+        input: {"computer_name":"jrs_Comp",...}
+
+        output:
+            {   {
+            "   "
+            KEY computer_name
+            "   "
+            :   :
+            "   "
+            VALUES  jrs_Comp
+            "   "
+            ,   ,
+            ...
+Step 3: parse the scan file
