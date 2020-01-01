@@ -3,4 +3,4 @@ project(schemanator C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(schemanator main.c)
+add_executable(schemanator main.c scanner.c scanner.h universalFunctions.h)
