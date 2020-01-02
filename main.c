@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     int progStat=0;
     FILE *fp; //filePointer
 
-    fp = fopen(argv[1],"r");
+    fp = fopen(argv[1],"rb+");
 
     //Confirm minimum reqs same number of start and end braces
     int intC; //int for holing pointer

@@ -16,6 +16,7 @@ int scannerStart(FILE *fp) {
     int cType = 0;
     int counter = 0;
     int tokOrLex = 1;
+    int isNum = 0;
 
     char *string;
 
@@ -36,7 +37,25 @@ int scannerStart(FILE *fp) {
             writeCharToFile('\n');
             counter++;
             //we're in a string and need to take some string related action
-        } else {
+        } else if(cType==5){
+            //rewind(fileCopy);
+            writeCharToFile(c);
+            writeCharToFile('\t');
+            writeCharToFile(c);
+            writeCharToFile('\n');
+            tokOrLex = scanArry(fileCopy);
+            writeCharToFile(c);
+            writeCharToFile('\t');
+            writeCharToFile(c);
+            writeCharToFile('\n');
+        }
+        else if(cType==100){
+            isNum = isInt(c);
+            if(isNum==1){
+                tokOrLex = scanNum(fileCopy);
+            }
+        }
+        else {
             writeCharToFile(c);
             writeCharToFile('\t');
             writeCharToFile(c);
@@ -44,6 +63,62 @@ int scannerStart(FILE *fp) {
         }
     }
     return 0; //need new return number for error/debugging
+}
+
+int scanArry(FILE *fp){
+    int intC;
+    char c;
+
+    writeCharToFile('V');
+    writeCharToFile('A');
+    writeCharToFile('L');
+    writeCharToFile('U');
+    writeCharToFile('E');
+    writeCharToFile('\t');
+
+
+    while ((intC = fgetc(fp)) != ']') {
+        if(intC !='[') {
+            c = (char) intC;
+            writeCharToFile(c);
+        }
+    }
+    writeCharToFile('\n');
+
+    return 1;
+
+}
+
+int isInt(char num){
+    for(int i=0;i<10;i++){
+        if(num==nums[i]);
+        return 1;
+    }
+    return 0;
+
+}
+
+int scanNum(FILE *fp){
+    int intC;
+    char c;
+    int retVal=0;
+
+    fseek(fp,-1L,SEEK_CUR);
+    writeCharToFile('V');
+    writeCharToFile('A');
+    writeCharToFile('L');
+    writeCharToFile('U');
+    writeCharToFile('E');
+    writeCharToFile('\t');
+
+    while ((intC = fgetc(fp)) != ',') {
+        if(intC !=':') {
+            c = (char) intC;
+            writeCharToFile(c);
+        }
+    }
+    writeCharToFile('\n');
+    return 1;
 }
 
 int scanString(FILE *fp, int first){
